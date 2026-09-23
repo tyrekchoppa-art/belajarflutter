@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:belajarflutter/pages/login_clone_page.dart';
+// import 'package:belajarflutter/pages/login_clone_page.dart';
+import 'package:belajarflutter/Kalkulator.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -30,10 +31,11 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: LoginClone(
-        username: TextEditingController(),
-        password: TextEditingController(),
-      ),
+      // home: LoginClone(
+      //   username: TextEditingController(),
+      //   password: TextEditingController(),
+      // )
+      home: KalkulatorPage(),
     );
   }
 }

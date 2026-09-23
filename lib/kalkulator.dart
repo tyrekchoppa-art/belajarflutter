@@ -1,139 +1,127 @@
 import 'package:flutter/material.dart';
+import 'package:belajarflutter/Components/custom_textfield.dart';
+import 'package:belajarflutter/Controller/kalkulator_controller.dart';
+import 'package:get/get.dart';
 
-class KalkulatorPage extends StatefulWidget {
-  const KalkulatorPage({super.key});
+class KalkulatorPage extends StatelessWidget {
+  KalkulatorPage({super.key});
 
-  @override
-  State<KalkulatorPage> createState() => _KalkulatorPageState();
-}
-
-class _KalkulatorPageState extends State<KalkulatorPage> {
-  final TextEditingController _firstNumberController = TextEditingController();
-  final TextEditingController _secondNumberController = TextEditingController();
-  String hasil = "";
-
-  void tambah() {
-    double angka1 = double.tryParse(_firstNumberController.text) ?? 0;
-    double angka2 = double.tryParse(_secondNumberController.text) ?? 0;
-    double result = angka1 + angka2;
-    setState(() {
-      hasil = result.toString();
-    });
-  }
-
-  void kurang() {
-    double angka1 = double.tryParse(_firstNumberController.text) ?? 0;
-    double angka2 = double.tryParse(_secondNumberController.text) ?? 0;
-    double result = angka1 - angka2;
-    setState(() {
-      hasil = result.toString();
-    });
-  }
-
-  void kali() {
-    double angka1 = double.tryParse(_firstNumberController.text) ?? 0;
-    double angka2 = double.tryParse(_secondNumberController.text) ?? 0;
-    double result = angka1 * angka2;
-    setState(() {
-      hasil = result.toString();
-    });
-  }
-
-  void bagi() {
-    double angka1 = double.tryParse(_firstNumberController.text) ?? 0;
-    double angka2 = double.tryParse(_secondNumberController.text) ?? 0;
-    if (angka2 == 0) {
-      setState(() {
-        hasil = "Tidak bisa dibagi 0";
-      });
-      return;
-    }
-    double result = angka1 / angka2;
-    setState(() {
-      hasil = result.toString();
-    });
-  }
-
-  void reset() {
-    setState(() {
-      _firstNumberController.clear();
-      _secondNumberController.clear();
-      hasil = "";
-    });
-  }
+  final controller = Get.put(KalkulatorController());
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController txtAngka1 = TextEditingController();
+    TextEditingController txtAngka2 = TextEditingController();
+    
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: const Text("Kalkulator"),
+        title: Text("Kalkulator"),
+        backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
+        elevation: 0,
       ),
-      body: Column(
-        children: [
-          const Text(
-            "Kalkulator Page",
-            style: TextStyle(
-              fontSize: 20, 
-              color: Colors.blue, 
-              fontStyle: FontStyle.italic
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            CustomTextField(
+              controller: txtAngka1,
+              hintText: "Masukkan Angka 1",
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            child: TextField(
-              controller: _firstNumberController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                hintText: "Enter first number",
+            const SizedBox(height: 12),
+            CustomTextField(
+              controller: txtAngka2,
+              hintText: "Masukkan Angka 2",
+            ),
+            const SizedBox(height: 24),
+            
+            // Baris Tombol Operasi
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () {
+                int angka1 = int.parse(txtAngka1.text);
+                int angka2 = int.parse(txtAngka2.text);
+                controller.tambah(angka1, angka2);
+              },
+              child: Text("Tambah", style: TextStyle(fontSize: 16)),  
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () {
+                int angka1 = int.parse(txtAngka1.text);
+                int angka2 = int.parse(txtAngka2.text);
+                controller.kurang(angka1, angka2);
+              },
+              child: Text("Kurang", style: TextStyle(fontSize: 16)),  
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () {
+                int angka1 = int.parse(txtAngka1.text);
+                int angka2 = int.parse(txtAngka2.text);
+                controller.kali(angka1, angka2);
+              },
+              child: Text("Kali", style: TextStyle(fontSize: 16)),  
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () {
+                int angka1 = int.parse(txtAngka1.text);
+                int angka2 = int.parse(txtAngka2.text);
+                controller.bagi(angka1, angka2);
+              },
+              child: Text("Bagi", style: TextStyle(fontSize: 16)),  
+            ),
+            const SizedBox(height: 30),
+            
+            // Hasil Kalkulator
+            Center(
+              child: Obx(
+                () => Text(
+                  "Hasil: ${controller.hasil}",
+                  style: TextStyle(
+                    fontSize: 28, 
+                    fontWeight: FontWeight.bold,
+                    color: Colors.indigo[800],
+                  ),
+                ),
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            child: TextField(
-              controller: _secondNumberController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                hintText: "Enter second number",
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: tambah,
-                child: const Text("Tambah"),
-              ),
-              ElevatedButton(
-                onPressed: kurang,
-                child: const Text("Kurang"),
-              ),
-              ElevatedButton(
-                onPressed: kali,
-                child: const Text("Kali"),
-              ),
-              ElevatedButton(
-                onPressed: bagi,
-                child: const Text("Bagi"),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Text(
-            "Hasil: $hasil",
-            style: const TextStyle(
-              fontSize: 20, 
-              color: Colors.red, 
-              fontStyle: FontStyle.italic
-            ),
-          ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: reset,
-            child: const Text("Reset"),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
