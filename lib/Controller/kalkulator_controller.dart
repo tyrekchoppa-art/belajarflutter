@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 class KalkulatorController extends GetxController {
   var hasil = 0.obs;
   void tambah(int angka1, int angka2) {
@@ -20,7 +19,7 @@ class KalkulatorController extends GetxController {
       snackPosition: SnackPosition.BOTTOM,
     );
   }
-  
+
   void kali(int angka1, int angka2) {
     int hasilKali = angka1 * angka2;
     hasil.value = hasilKali;
@@ -44,5 +43,8 @@ class KalkulatorController extends GetxController {
     }
   }
 
+ void resetHasil() {
+    hasil.value = 0;
   
+  }
 }

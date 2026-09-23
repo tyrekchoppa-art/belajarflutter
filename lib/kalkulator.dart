@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:belajarflutter/Components/custom_textfield.dart';
 import 'package:belajarflutter/Controller/kalkulator_controller.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class KalkulatorPage extends StatelessWidget {
@@ -27,13 +28,17 @@ class KalkulatorPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             CustomTextField(
-              controller: txtAngka1,
+               controller: txtAngka1,
               hintText: "Masukkan Angka 1",
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
             const SizedBox(height: 12),
             CustomTextField(
               controller: txtAngka2,
               hintText: "Masukkan Angka 2",
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
             const SizedBox(height: 24),
             
@@ -106,7 +111,16 @@ class KalkulatorPage extends StatelessWidget {
               child: Text("Bagi", style: TextStyle(fontSize: 16)),  
             ),
             const SizedBox(height: 30),
-            
+             ElevatedButton(
+            onPressed: () {
+              // Fungsi khusus clear/reset ditaruh di sini
+              txtAngka1.clear();
+              txtAngka2.clear();
+              controller.resetHasil();
+            },
+            child: Text("Clear"),
+          ),
+        
             // Hasil Kalkulator
             Center(
               child: Obx(

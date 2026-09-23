@@ -4,11 +4,15 @@ import 'package:flutter/services.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextField({
     super.key, 
     required this.controller, 
     required this.hintText,
+    this.keyboardType,
+    this.inputFormatters,
   });
 
   @override
