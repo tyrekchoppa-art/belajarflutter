@@ -15,7 +15,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController txtEmail = TextEditingController();
 
   String jenisKelamin = "Laki-Laki";
-  String hobi = "Membaca";
+  String hobi = "Bola Sepak";
   bool setujuSyarat = false;
 
   final List<String> listHobi = ["Bola Sepak", "Basket", "Coding", "Silat"];
